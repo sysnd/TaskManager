@@ -91,7 +91,6 @@ const ContainerUsers = () => {
 
     const deleteUser = (user: User) => {
         if (loggedInUser.isAdmin === true) {
-            console.log(shouldUpdate);
             deleteUserRequest(user.id);
             enqueueSnackbar("Successfully deleted user.", { variant: 'success' });
             setShouldUpdate(true);

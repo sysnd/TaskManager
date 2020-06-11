@@ -31,7 +31,6 @@ const App: React.FC = (props: any) => {
   }, [location.pathname, history]);
 
   return (
-    // <ThemeProvider theme={theme}>
     <SnackbarProvider
       maxSnack={snackbarProps.maxSnackCount}
       anchorOrigin={snackbarProps.anchorOriginPosition}
@@ -50,7 +49,6 @@ const App: React.FC = (props: any) => {
         </Switch>
       </div>
     </SnackbarProvider>
-    // </ThemeProvider>
   )
 };
 

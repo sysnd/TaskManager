@@ -7,6 +7,7 @@ import AddTaskDialog from './addTaskDialog/AddTaskDialog';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import { TaskStatus } from '../../enums/TaskStatus';
+import SimpleDialog from '../common/dialog/SimpleDialog';
 
 const ViewTasks = (props: any) => {
     const
@@ -23,6 +24,9 @@ const ViewTasks = (props: any) => {
     const classes = styles();
 
     const [currentTask, setCurrentTask] = useState<Task>();
+    const [isOpen, setIsOpen] = useState(false);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
 
     const disabled = (task: Task) => {
         if (task.userId === loggedInUser.id) {
@@ -34,6 +38,21 @@ const ViewTasks = (props: any) => {
         else {
             return true;
         }
+    }
+
+    const openSimpleDialog = (title: string, description: string) => {
+        setIsOpen(true);
+        setTitle(title);
+        setDescription(description);
+    }
+
+    const onContinue = (task: Task) => {
+        deleteTask(task);
+        setIsOpen(false);
+    }
+
+    const onClose = () => {
+        setIsOpen(false);
     }
 
     return (
@@ -115,11 +134,12 @@ const ViewTasks = (props: any) => {
                                                     <IconButton
                                                         type="submit"
                                                         color="primary"
-                                                        onClick={() => deleteTask(task)}
+                                                        onClick={() => openSimpleDialog('Are you sure you want to delete this task?', 'This will remove the task permanently.')}
                                                         disabled={disabled(task)}
                                                     >
                                                         <DeleteForeverIcon />
                                                     </IconButton>
+                                                    <SimpleDialog isOpen={isOpen} title={title} description={description} onCancel={onClose} onContinue={() => onContinue(task)} />
                                                 </TableCell>
                                             </TableRow >
                                         </React.Fragment>

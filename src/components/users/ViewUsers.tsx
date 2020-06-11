@@ -6,6 +6,7 @@ import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import AddUserDialog from './addUserDialog/AddUserDialog';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
+import SimpleDialog from '../common/dialog/SimpleDialog';
 
 const ViewUsers = (props: any) => {
     const
@@ -25,6 +26,9 @@ const ViewUsers = (props: any) => {
     const classes = styles();
 
     const [currentUser, setCurrentUser] = useState<User>();
+    const [isOpen, setIsOpen] = useState(false);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
 
     const disabledDelete = (user: User) => {
         if (loggedInUser.isAdmin && user.id !== loggedInUser.id) {
@@ -42,6 +46,21 @@ const ViewUsers = (props: any) => {
         else {
             return true;
         }
+    }
+
+    const openSimpleDialog = (title: string, description: string) => {
+        setIsOpen(true);
+        setTitle(title);
+        setDescription(description);
+    }
+
+    const onContinue = (user:User) =>{
+        deleteUser(user);
+        setIsOpen(false);
+    }
+
+    const onClose = () => {
+        setIsOpen(false);
     }
 
     return (
@@ -126,11 +145,12 @@ const ViewUsers = (props: any) => {
                                                     <IconButton
                                                         type="submit"
                                                         color="primary"
-                                                        onClick={() => deleteUser(user)}
+                                                        onClick={() => openSimpleDialog('Are you sure you want to delete this user?', 'This will remove the user permanently.' )}
                                                         disabled={disabledDelete(user)}
                                                     >
                                                         <DeleteForeverIcon />
                                                     </IconButton>
+                                                    <SimpleDialog isOpen={isOpen} title={title} description={description} onCancel={onClose} onContinue={()=>onContinue(user)} />
                                                 </TableCell>
                                             </TableRow >
                                         </React.Fragment>

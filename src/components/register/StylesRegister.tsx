@@ -13,6 +13,9 @@ export default makeStyles((theme) => {
         submit: {
             margin: 'auto',
             marginTop: '16px'
+        },
+        marginLeft: {
+            marginLeft: 'auto'
         }
     };
 });

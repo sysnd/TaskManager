@@ -1,10 +1,12 @@
 import { User } from '../../interfaces/User';
 import { RegisterResponse } from '../../interfaces/auth/RegisterResponse';
+import { Guid } from 'guid-typescript';
 
 export const registerRequest = (user: User) => {
     let usersString = localStorage.getItem('users');
     let users: User[] = [];
     let response: RegisterResponse = { success: false, message: 'A user with these credentials already exists.' };
+    user.id = Guid.create().toString();
 
     if (usersString) {
         users = JSON.parse(usersString);
@@ -33,6 +35,7 @@ export const loginRequest = (username: string, password: string) => {
         let currentUser = users.find(x => x.username === username && x.password === password);
 
         if (currentUser !== null) {
+            localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
             return true;
         }
         else {
@@ -41,4 +44,15 @@ export const loginRequest = (username: string, password: string) => {
     }
 
     return false;
+}
+
+export const getLoggedInUserRequest = () => {
+    let loggedInUserString = localStorage.getItem('loggedInUser');
+    let loggedInUser = null;
+
+    if (loggedInUserString) {
+        loggedInUser = JSON.parse(loggedInUserString);
+    }
+
+    return loggedInUser;
 }

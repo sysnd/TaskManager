@@ -10,7 +10,8 @@ const ViewRegister = (props: any) => {
         usernameErrorProps,
         passwordErrorProps,
         firstNameErrorProps,
-        lastNameErrorProps
+        lastNameErrorProps,
+        unsetErrorProps
     } = props || {};
 
     const [user, setUser] = useState<User>({
@@ -42,7 +43,7 @@ const ViewRegister = (props: any) => {
                             <form onSubmit={onSubmit} autoComplete='off'>
                                 <Box mb={1} mt={1}>
                                     <Typography component='h5' variant='h5'>
-                                        Sign In
+                                        Sign Up
                                 </Typography>
                                 </Box>
                                 <Grid item xs={12}>
@@ -54,7 +55,10 @@ const ViewRegister = (props: any) => {
                                     <TextField
                                         id='first-name-text-field'
                                         value={user.firstName || ''}
-                                        onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+                                        onChange={(e) => {
+                                            setUser({ ...user, firstName: e.target.value });
+                                            unsetErrorProps("firstName");
+                                        }}
                                         fullWidth
                                         type='text'
                                         variant='outlined'
@@ -72,7 +76,10 @@ const ViewRegister = (props: any) => {
                                     <TextField
                                         id='last-name-text-field'
                                         value={user.lastName || ''}
-                                        onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+                                        onChange={(e) => {
+                                            setUser({ ...user, lastName: e.target.value });
+                                            unsetErrorProps("lastName");
+                                        }}
                                         fullWidth
                                         type='text'
                                         variant='outlined'
@@ -90,7 +97,10 @@ const ViewRegister = (props: any) => {
                                     <TextField
                                         id='username-text-field'
                                         value={user.username || ''}
-                                        onChange={(e) => setUser({ ...user, username: e.target.value })}
+                                        onChange={(e) => {
+                                            setUser({ ...user, username: e.target.value });
+                                            unsetErrorProps("username");
+                                        }}
                                         fullWidth
                                         type='text'
                                         variant='outlined'
@@ -108,7 +118,10 @@ const ViewRegister = (props: any) => {
                                     <TextField
                                         id='password-text-field'
                                         value={user.password || ''}
-                                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                        onChange={(e) => {
+                                            setUser({ ...user, password: e.target.value });
+                                            unsetErrorProps("password");
+                                        }}
                                         fullWidth
                                         type='password'
                                         variant='outlined'
@@ -125,18 +138,18 @@ const ViewRegister = (props: any) => {
                                             color='primary'
                                             className={classes.submit}
                                         >
-                                            Sign In
+                                            Sign Up
                                         </Button>
                                     </Box>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Box display='flex' mt={1}>
                                         <Typography component='p' variant='body2'>
-                                            Don't have an account?
+                                            Already have an account?
                                         </Typography>
-                                        <Typography component='p' variant='body2'>
-                                            <Link to={{ pathname: '/register' }}>
-                                                Register
+                                        <Typography component='p' variant='body2' className={classes.marginLeft}>
+                                            <Link to={{ pathname: '/login' }}>
+                                                Sign in
                                             </Link>
                                         </Typography>
                                     </Box>

@@ -46,8 +46,8 @@ const ViewLogin = (props: any) => {
                                         type='text'
                                         variant='outlined'
                                         size='small'
-                                        error={usernameErrorProps.error}
-                                        helperText={usernameErrorProps.helperText}
+                                        error={usernameErrorProps?.error}
+                                        helperText={usernameErrorProps?.helperText}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -61,11 +61,11 @@ const ViewLogin = (props: any) => {
                                         value={password || ''}
                                         onChange={(e) => setPassword(e.target.value)}
                                         fullWidth
-                                        type='text'
+                                        type='password'
                                         variant='outlined'
                                         size='small'
-                                        error={passwordErrorProps.error}
-                                        helperText={passwordErrorProps.helperText}
+                                        error={passwordErrorProps?.error}
+                                        helperText={passwordErrorProps?.helperText}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -85,8 +85,9 @@ const ViewLogin = (props: any) => {
                                         <Typography component='p' variant='body2'>
                                             Don't have an account?
                                         </Typography>
-                                        <Typography component='p' variant='body2'>
-                                            <Link to={{pathname:'/register'}}>
+                                        <Typography component='p' variant='body2' className={classes.marginLeft}>
+                                            <Link to={{ pathname: '/register' }}>
+                                                Register
                                             </Link>
                                         </Typography>
                                     </Box>

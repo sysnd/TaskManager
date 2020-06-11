@@ -14,23 +14,46 @@ const ContainerRegister = (props: any) => {
 
     const { enqueueSnackbar } = useSnackbar();
 
+    const unsetErrorProps = (type: string) => {
+        switch (type) {
+            case 'password':
+                setPasswordErrorProps({ error: false, helperText: '' });
+                break;
+            case 'username':
+                setUsernameErrorProps({ error: false, helperText: '' });
+                break;
+            case 'firstName':
+                setFirstNameErrorProps({ error: false, helperText: '' });
+                break;
+            case 'lastName':
+                setLastNameErrorProps({ error: false, helperText: '' });
+                break;
+        }
+    }
+
     const handleSubmit = async (user: User) => {
+        let isFormValid = true;
         if (user.username === '') {
             setUsernameErrorProps({ error: true, helperText: 'Username is required' });
-            return;
+            isFormValid = false;
         }
         if (user.password === '') {
             setPasswordErrorProps({ error: true, helperText: 'Password is required' });
-            return;
+            isFormValid = false;
         }
         if (user.firstName === '') {
             setFirstNameErrorProps({ error: true, helperText: 'First Name is required' });
-            return;
+            isFormValid = false;
         }
         if (user.lastName === '') {
             setLastNameErrorProps({ error: true, helperText: 'Last Name is required' });
+            isFormValid = false;
+        }
+
+        if (!isFormValid) {
             return;
         }
+
 
         let response = registerRequest(user);
         if (response.success === true) {
@@ -48,6 +71,7 @@ const ContainerRegister = (props: any) => {
         passwordErrorProps={passwordErrorProps}
         firstNameErrorProps={firstNameErrorProps}
         lastNameErrorProps={lastNameErrorProps}
+        unsetErrorProps={unsetErrorProps}
     />;
 };
 

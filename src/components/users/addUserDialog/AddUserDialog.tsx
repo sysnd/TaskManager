@@ -108,7 +108,7 @@ export default function FormDialog(props: any) {
                         fullWidth
                         required
                         label='Password'
-                        type='text'
+                        type='password'
                         variant='outlined'
                         margin='dense'
                         error={passwordErrorProps.error}

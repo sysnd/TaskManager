@@ -26,8 +26,17 @@ const ViewUsers = (props: any) => {
 
     const [currentUser, setCurrentUser] = useState<User>();
 
-    const disabled = (user: User) => {
+    const disabledDelete = (user: User) => {
         if (loggedInUser.isAdmin && user.id !== loggedInUser.id) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    const disabledEdit = (user: User) => {
+        if (loggedInUser.isAdmin) {
             return false;
         }
         else {
@@ -110,7 +119,7 @@ const ViewUsers = (props: any) => {
                                                             setCurrentUser(user);
                                                             setOpen(true);
                                                         }}
-                                                        disabled={disabled(user)}
+                                                        disabled={disabledEdit(user)}
                                                     >
                                                         <EditIcon />
                                                     </IconButton>
@@ -118,7 +127,7 @@ const ViewUsers = (props: any) => {
                                                         type="submit"
                                                         color="primary"
                                                         onClick={() => deleteUser(user)}
-                                                        disabled={disabled(user)}
+                                                        disabled={disabledDelete(user)}
                                                     >
                                                         <DeleteForeverIcon />
                                                     </IconButton>

@@ -22,7 +22,7 @@ const ViewUsers = (props: any) => {
     const [currentUser, setCurrentUser] = useState<User>();
 
     const disabled = (user: User) => {
-        if (loggedInUser.isAdmin) {
+        if (loggedInUser.isAdmin && user.id !== loggedInUser.id) {
             return false;
         }
         else {
@@ -84,7 +84,7 @@ const ViewUsers = (props: any) => {
                                                 </TableCell>
                                                 <TableCell>
                                                     <Typography color="textSecondary" className={classes.text}>
-                                                        {user.isAdmin}
+                                                        {user.isAdmin === true ? 'True' : 'False'}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell style={{ width: '100px' }}>

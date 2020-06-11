@@ -10,7 +10,18 @@ import { User } from '../../../interfaces/User';
 
 export default function FormDialog(props: any) {
 
-    const { open, setOpen, saveUser, userToUpdate } = props || {};
+    const
+        {
+            open,
+            setOpen,
+            userToUpdate,
+            handleSubmit,
+            usernameErrorProps,
+            passwordErrorProps,
+            firstNameErrorProps,
+            lastNameErrorProps,
+            unsetErrorProps
+        } = props || {};
 
     const [user, setUser] = useState<User>({
         id: '',
@@ -34,7 +45,7 @@ export default function FormDialog(props: any) {
     };
 
     const handleAdd = (user: User) => {
-        saveUser(user);
+        handleSubmit(user);
     };
 
     return (
@@ -43,41 +54,65 @@ export default function FormDialog(props: any) {
                 <DialogTitle id='form-dialog-title'>Add User</DialogTitle>
                 <DialogContent>
                     <TextField
+                        value={user.firstName || ''}
+                        onChange={(e) => {
+                            setUser({ ...user, firstName: e.target.value });
+                            unsetErrorProps("firstName");
+                        }}
+                        fullWidth
                         autoFocus
-                        margin='dense'
+                        required
                         label='First Name'
                         type='text'
                         variant='outlined'
-                        fullWidth
-                        value={user.firstName || ''}
-                        onChange={(e: any) => setUser({ ...user, firstName: e.target.value })}
-                    />
-                    <TextField
                         margin='dense'
+                        error={firstNameErrorProps.error}
+                        helperText={firstNameErrorProps.helperText}
+                    />
+                     <TextField
+                        value={user.lastName || ''}
+                        onChange={(e) => {
+                            setUser({ ...user, lastName: e.target.value });
+                            unsetErrorProps("lastName");
+                        }}
+                        fullWidth
+                        required
                         label='Last Name'
                         type='text'
                         variant='outlined'
-                        fullWidth
-                        value={user.lastName || ''}
-                        onChange={(e: any) => setUser({ ...user, lastName: e.target.value })}
-                    />
-                    <TextField
                         margin='dense'
+                        error={lastNameErrorProps.error}
+                        helperText={lastNameErrorProps.helperText}
+                    />
+                     <TextField
+                        value={user.username || ''}
+                        onChange={(e) => {
+                            setUser({ ...user, username: e.target.value });
+                            unsetErrorProps("username");
+                        }}
+                        fullWidth
+                        required
                         label='Username'
                         type='text'
                         variant='outlined'
-                        fullWidth
-                        value={user.username || ''}
-                        onChange={(e: any) => setUser({ ...user, username: e.target.value })}
-                    />
-                    <TextField
                         margin='dense'
-                        label='Password'
-                        type='password'
-                        variant='outlined'
-                        fullWidth
+                        error={usernameErrorProps.error}
+                        helperText={usernameErrorProps.helperText}
+                    />
+                     <TextField
                         value={user.password || ''}
-                        onChange={(e: any) => setUser({ ...user, password: e.target.value })}
+                        onChange={(e) => {
+                            setUser({ ...user, password: e.target.value });
+                            unsetErrorProps("password");
+                        }}
+                        fullWidth
+                        required
+                        label='Password'
+                        type='text'
+                        variant='outlined'
+                        margin='dense'
+                        error={passwordErrorProps.error}
+                        helperText={passwordErrorProps.helperText}
                     />
                     <FormControlLabel
                         control={

@@ -16,20 +16,22 @@ const ViewTasks = (props: any) => {
             saveTask,
             open,
             setOpen,
-            loggedInUser
+            loggedInUser,
+            titleErrorProps,
+            setTitleErrorProps
         } = props || {};
     const classes = styles();
 
     const [currentTask, setCurrentTask] = useState<Task>();
 
     const disabled = (task: Task) => {
-        if(task.userId===loggedInUser.id){
+        if (task.userId === loggedInUser.id) {
             return false;
         }
-        else if(loggedInUser.isAdmin){
+        else if (loggedInUser.isAdmin) {
             return false;
         }
-        else{
+        else {
             return true;
         }
     }
@@ -44,7 +46,14 @@ const ViewTasks = (props: any) => {
                 onClick={() => setOpen(true)}
             >
                 Add task</Button>
-            <AddTaskDialog open={open} setOpen={setOpen} taskToUpdate={currentTask} saveTask={saveTask} />
+            <AddTaskDialog
+                open={open}
+                setOpen={setOpen}
+                taskToUpdate={currentTask}
+                saveTask={saveTask}
+                titleErrorProps={titleErrorProps}
+                setTitleErrorProps={setTitleErrorProps}
+            />
             <Box mt={3}>
                 <TableContainer component={Paper} elevation={3} className={classes.container}>
                     <Table style={{ tableLayout: 'auto' }}>

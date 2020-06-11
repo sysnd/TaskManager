@@ -11,7 +11,15 @@ import { Select, MenuItem } from '@material-ui/core';
 
 export default function FormDialog(props: any) {
 
-  const { open, setOpen, saveTask, taskToUpdate } = props || {};
+  const
+    {
+      open,
+      setOpen,
+      saveTask,
+      taskToUpdate,
+      titleErrorProps,
+      setTitleErrorProps
+    } = props || {};
 
   const [task, setTask] = useState<Task>({
     id: '',
@@ -50,8 +58,14 @@ export default function FormDialog(props: any) {
             type='text'
             variant='outlined'
             fullWidth
+            required
             value={task.title || ''}
-            onChange={(e: any) => setTask({ ...task, title: e.target.value })}
+            onChange={(e: any) => {
+              setTitleErrorProps({ error: false, helperText: '' });
+              setTask({ ...task, title: e.target.value });
+            }}
+            error={titleErrorProps.error}
+            helperText={titleErrorProps.helperText}
           />
           <TextField
             margin='dense'

@@ -12,10 +12,15 @@ const ViewUsers = (props: any) => {
         {
             users,
             deleteUser,
-            saveUser,
             open,
             setOpen,
-            loggedInUser
+            loggedInUser,
+            handleSubmit,
+            usernameErrorProps,
+            passwordErrorProps,
+            firstNameErrorProps,
+            lastNameErrorProps,
+            unsetErrorProps
         } = props || {};
     const classes = styles();
 
@@ -40,7 +45,17 @@ const ViewUsers = (props: any) => {
                 onClick={() => setOpen(true)}
             >
                 Add user</Button>
-            <AddUserDialog open={open} setOpen={setOpen} userToUpdate={currentUser} saveUser={saveUser} />
+            <AddUserDialog
+                open={open}
+                setOpen={setOpen}
+                userToUpdate={currentUser}
+                handleSubmit={handleSubmit}
+                usernameErrorProps={usernameErrorProps}
+                passwordErrorProps={passwordErrorProps}
+                firstNameErrorProps={firstNameErrorProps}
+                lastNameErrorProps={lastNameErrorProps}
+                unsetErrorProps={unsetErrorProps}
+            />
             <Box mt={3}>
                 <TableContainer component={Paper} elevation={3} className={classes.container}>
                     <Table style={{ tableLayout: 'auto' }}>

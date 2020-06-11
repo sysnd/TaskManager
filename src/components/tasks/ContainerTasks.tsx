@@ -11,11 +11,17 @@ const ContainerTasks = () => {
     const [tasks, setTasks] = useState([] as Task[]);
     const [open, setOpen] = useState(false);
     const [shouldUpdate, setShouldUpdate] = useState(false);
+    const [isFetched, setIsFetched] = useState(false);
+    const [titleErrorProps, setTitleErrorProps] = useState({ error: false, helperText: '' });
 
     const { enqueueSnackbar } = useSnackbar();
     let loggedInUser = getLoggedInUserRequest();
 
     const saveTask = (task: Task) => {
+        if (task.title === '') {
+            setTitleErrorProps({ error: true, helperText: 'Title is required' });
+            return;
+        }
         if (task.id !== '') {
             updateTask(task);
         }
@@ -41,18 +47,22 @@ const ContainerTasks = () => {
     const deleteTask = (task: Task) => {
         if (loggedInUser.isAdmin === true ||
             task.userId === loggedInUser.id) {
-                deleteTaskRequest(task.id);
+            deleteTaskRequest(task.id);
         }
         enqueueSnackbar("Successfully deleted task.", { variant: 'success' });
         setShouldUpdate(true);
     }
 
     useEffect(() => {
-        let tasks = getTasks();
-        if (tasks) {
-            setTasks(tasks);
+        if (shouldUpdate || !isFetched) {
+            let tasks = getTasks();
+            if (tasks) {
+                setTasks(tasks);
+            }
+            setShouldUpdate(false);
+            setIsFetched(true);
         }
-    }, [shouldUpdate]);
+    }, [shouldUpdate, isFetched]);
 
     return <ViewTasks
         tasks={tasks}
@@ -61,6 +71,8 @@ const ContainerTasks = () => {
         open={open}
         setOpen={setOpen}
         loggedInUser={loggedInUser}
+        titleErrorProps={titleErrorProps}
+        setTitleErrorProps={setTitleErrorProps}
     />;
 };
 

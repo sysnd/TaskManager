@@ -33,6 +33,13 @@ export default makeStyles((theme) => {
       color: '#fff',
       float: 'right',
       marginTop: '8px'
+    },
+    container: {
+      display: 'flex',
+      float: 'right'
+    },
+    marginTop:{
+      marginTop: '14px'
     }
   };
 });

@@ -9,10 +9,12 @@ import {
     Tabs,
     Tab,
     Button,
+    Typography,
 } from '@material-ui/core';
 import styles from './StylesHeader';
 import { getLoggedInUserRequest } from '../../../services/auth/AuthService';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const ViewHeader = (props: any) => {
     const classes = styles();
@@ -48,16 +50,20 @@ const ViewHeader = (props: any) => {
                 <AppBar className={classes.appBar}>
                     <Toolbar className={classes.toolbar}>
                         <Grid container spacing={2}>
-                            <Grid item xs={10}>
+                            <Grid item xs={8}>
                                 {tabs}
                             </Grid>
-                            <Grid item xs={2}>
-                                <Button
-                                    endIcon={<ExitToAppIcon />}
-                                    className={classes.buttonLogout}
-                                    onClick={handleLogout}>
-                                    Logout
+                            <Grid item xs={4}>
+                                <Box className={classes.container}>
+                                    <AccountCircleIcon className={classes.marginTop} />
+                                    <Typography className={classes.marginTop}>Hello, {loggedInUser.firstName} |</Typography>
+                                    <Button
+                                        endIcon={<ExitToAppIcon />}
+                                        className={classes.buttonLogout}
+                                        onClick={handleLogout}>
+                                        Logout
                                 </Button>
+                                </Box>
                             </Grid>
                         </Grid>
                     </Toolbar>

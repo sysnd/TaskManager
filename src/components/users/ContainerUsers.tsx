@@ -5,6 +5,8 @@ import { Guid } from 'guid-typescript';
 import { getLoggedInUserRequest } from '../../services/auth/AuthService';
 import { useSnackbar } from 'notistack';
 import { addUserRequest, updateUserRequest, deleteUserRequest, getUsers } from '../../services/users/UsersService';
+import { Typography, Box } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const ContainerUsers = () => {
 
@@ -45,7 +47,7 @@ const ContainerUsers = () => {
             enqueueSnackbar("Successfully deleted user.", { variant: 'success' });
             setShouldUpdate(true);
         }
-        else{
+        else {
             enqueueSnackbar("You can not delete this user.", { variant: 'success' });
         }
     }
@@ -57,14 +59,20 @@ const ContainerUsers = () => {
         }
     }, [shouldUpdate]);
 
-    return <ViewUsers
+    return loggedInUser.isAdmin ? <ViewUsers
         users={users}
         deleteUser={deleteUser}
         saveUser={saveUser}
         open={open}
         setOpen={setOpen}
         loggedInUser={loggedInUser}
-    />;
+    />
+        :
+        <Box style={{ textAlign: 'center' }}>
+            <Typography>You don't have sufficient rights to view this page.</Typography>
+            <Link to={{ pathname: '/' }}>Go Back</Link>
+        </Box>
+        ;
 };
 
 export default ContainerUsers;

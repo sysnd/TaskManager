@@ -5,7 +5,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Select, MenuItem, Checkbox, FormControlLabel } from '@material-ui/core';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
 import { User } from '../../../interfaces/User';
 
 export default function FormDialog(props: any) {
@@ -64,7 +64,7 @@ export default function FormDialog(props: any) {
                     <TextField
                         margin='dense'
                         label='Username'
-                        type='number'
+                        type='text'
                         variant='outlined'
                         fullWidth
                         value={user.username || ''}
@@ -73,7 +73,7 @@ export default function FormDialog(props: any) {
                     <TextField
                         margin='dense'
                         label='Password'
-                        type='number'
+                        type='password'
                         variant='outlined'
                         fullWidth
                         value={user.password || ''}
@@ -82,8 +82,8 @@ export default function FormDialog(props: any) {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={user.isAdmin || false}
-                                onChange={(e: any) => setUser({ ...user, isAdmin: e.target.value })}
+                                checked={user.isAdmin}
+                                onClick={(e: any) => setUser({ ...user, isAdmin: e.target.checked })}
                                 color="primary"
                             />
                         }

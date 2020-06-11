@@ -7,12 +7,19 @@ import { withRouter } from 'react-router-dom';
 const ContainerHeader = (props: any) => {
     const {
         location,
+        history
     } = props || {};
 
     const classes = styles();
 
     const [showHeader, setShowHeader] = useState(false);
     const [selectedValue, setSelectedValue] = useState<string>('/');
+
+    const handleLogout = () => {
+        localStorage.removeItem('loggedInUser');
+        setShowHeader(false);
+        history.push('/login');
+    }
 
     useEffect(() => {
         if (!location.pathname.includes('/login')
@@ -30,7 +37,7 @@ const ContainerHeader = (props: any) => {
         (
             <>
                 <AppBar position="fixed" className={classes.appBar}>
-                    <ViewHeader selectedValue={selectedValue} />
+                    <ViewHeader selectedValue={selectedValue} handleLogout={handleLogout} />
                 </AppBar>
             </>
         )

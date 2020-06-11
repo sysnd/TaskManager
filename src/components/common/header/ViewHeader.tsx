@@ -8,14 +8,16 @@ import {
     AppBar,
     Tabs,
     Tab,
+    Button,
 } from '@material-ui/core';
 import styles from './StylesHeader';
 import { getLoggedInUserRequest } from '../../../services/auth/AuthService';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const ViewHeader = (props: any) => {
     const classes = styles();
 
-    const { selectedValue, location } = props || {};
+    const { selectedValue, location, handleLogout } = props || {};
 
     let loggedInUser = getLoggedInUserRequest();
 
@@ -46,8 +48,16 @@ const ViewHeader = (props: any) => {
                 <AppBar className={classes.appBar}>
                     <Toolbar className={classes.toolbar}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12}>
+                            <Grid item xs={10}>
                                 {tabs}
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Button
+                                    endIcon={<ExitToAppIcon />}
+                                    className={classes.buttonLogout}
+                                    onClick={handleLogout}>
+                                    Logout
+                                </Button>
                             </Grid>
                         </Grid>
                     </Toolbar>

@@ -15,7 +15,8 @@ export default makeStyles((theme) => {
       maxWidth: '1248px',
       margin: 'auto',
       marginBottom: '0',
-      marginTop: '0'
+      marginTop: '0',
+      padding: '0'
     },
     grow: {
       boxSizing: 'border-box'
@@ -27,6 +28,11 @@ export default makeStyles((theme) => {
     },
     linkText: {
       color: theme.palette.text.primary,
+    },
+    buttonLogout: {
+      color: '#fff',
+      float: 'right',
+      marginTop: '8px'
     }
   };
 });

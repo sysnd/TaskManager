@@ -6,7 +6,6 @@ import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import AddUserDialog from './addUserDialog/AddUserDialog';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
-import { getLoggedInUserRequest } from '../../services/auth/AuthService';
 
 const ViewUsers = (props: any) => {
     const

@@ -7,7 +7,6 @@ import AddTaskDialog from './addTaskDialog/AddTaskDialog';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
 import { TaskStatus } from '../../enums/TaskStatus';
-import { getLoggedInUserRequest } from '../../services/auth/AuthService';
 
 const ViewTasks = (props: any) => {
     const

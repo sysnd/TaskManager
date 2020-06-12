@@ -13,15 +13,24 @@ const ContainerTasks = () => {
     const [shouldUpdate, setShouldUpdate] = useState(false);
     const [isFetched, setIsFetched] = useState(false);
     const [titleErrorProps, setTitleErrorProps] = useState({ error: false, helperText: '' });
+    const [estimationErrorProps, setEstimationErrorProps] = useState({ error: false, helperText: '' });
 
     const { enqueueSnackbar } = useSnackbar();
     let loggedInUser = getLoggedInUserRequest();
 
     const saveTask = (task: Task) => {
+        let formIsValid = true;
         if (task.title === '') {
             setTitleErrorProps({ error: true, helperText: 'Title is required' });
+            formIsValid = false;
+        }
+        if (!validateEstimation(task.estimation)) {
+            formIsValid = false;
+        }
+        if (!formIsValid) {
             return;
         }
+
         if (task.id !== '') {
             updateTask(task);
         }
@@ -53,6 +62,17 @@ const ContainerTasks = () => {
         setShouldUpdate(true);
     }
 
+    const validateEstimation = (estimation: any) => {
+        if (estimation.includes('.') || !parseInt(estimation) || estimation < 0) {
+            setEstimationErrorProps({ error: true, helperText: 'Estimation must be an integer bigger than 0' });
+            return false;
+        }
+        else {
+            setEstimationErrorProps({ error: false, helperText: '' });
+            return true;
+        }
+    }
+
     useEffect(() => {
         if (shouldUpdate || !isFetched) {
             let tasks = getTasks();
@@ -73,6 +93,8 @@ const ContainerTasks = () => {
         loggedInUser={loggedInUser}
         titleErrorProps={titleErrorProps}
         setTitleErrorProps={setTitleErrorProps}
+        estimationErrorProps={estimationErrorProps}
+        validateEstimation={validateEstimation}
     />;
 };
 

@@ -20,6 +20,8 @@ const ViewTasks = (props: any) => {
             loggedInUser,
             titleErrorProps,
             setTitleErrorProps,
+            estimationErrorProps,
+            validateEstimation
         } = props || {};
     const classes = styles();
 
@@ -78,6 +80,8 @@ const ViewTasks = (props: any) => {
                 titleErrorProps={titleErrorProps}
                 setTitleErrorProps={setTitleErrorProps}
                 title={addTitle}
+                estimationErrorProps={estimationErrorProps}
+                validateEstimation={validateEstimation}
             />
             <Box mt={3}>
                 <TableContainer component={Paper} elevation={3} className={classes.container}>

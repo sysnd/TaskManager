@@ -66,11 +66,9 @@ const ContainerUsers = () => {
 
     const saveUser = (user: User) => {
         if (user.id !== '') {
-            console.log('in update');
             return updateUser(user);
         }
         else {
-            console.log('in add');
             return addUser(user);
         }
     }

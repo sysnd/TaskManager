@@ -19,6 +19,8 @@ export default function FormDialog(props: any) {
       taskToUpdate,
       titleErrorProps,
       setTitleErrorProps,
+      estimationErrorProps,
+      validateEstimation,
       title
     } = props || {};
 
@@ -88,7 +90,12 @@ export default function FormDialog(props: any) {
             variant='outlined'
             fullWidth
             value={task.estimation || ''}
-            onChange={(e: any) => setTask({ ...task, estimation: e.target.value })}
+            onChange={(e: any) => {
+              validateEstimation(e.target.value);
+              setTask({ ...task, estimation: e.target.value });
+            }}
+            error={estimationErrorProps.error}
+            helperText={estimationErrorProps.helperText}
           />
           <Select
             fullWidth

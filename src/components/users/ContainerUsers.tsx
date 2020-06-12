@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ViewUsers from './ViewUsers';
 import { User } from '../../interfaces/User';
-import { Guid } from 'guid-typescript';
 import { getLoggedInUserRequest } from '../../services/auth/AuthService';
 import { useSnackbar } from 'notistack';
 import { addUserRequest, updateUserRequest, deleteUserRequest, getUsers } from '../../services/users/UsersService';
@@ -62,31 +61,46 @@ const ContainerUsers = () => {
             return;
         }
 
-        saveUser(user);
+        return saveUser(user);
     }
 
     const saveUser = (user: User) => {
         if (user.id !== '') {
-            updateUser(user);
+            console.log('in update');
+            return updateUser(user);
         }
         else {
-            addUser(user);
+            console.log('in add');
+            return addUser(user);
         }
     }
 
     const addUser = (user: User) => {
-        user.id = Guid.create().toString();
-        addUserRequest(user);
-        enqueueSnackbar("Successfully added user.", { variant: 'success' });
-        setOpen(false);
-        setShouldUpdate(true);
+        let response = addUserRequest(user);
+        if (!response.success) {
+            enqueueSnackbar(response.message, { variant: 'error' });
+            return false;
+        }
+        else {
+            enqueueSnackbar(response.message, { variant: 'success' });
+            setOpen(false);
+            setShouldUpdate(true);
+            return true;
+        }
     }
 
     const updateUser = (user: User) => {
-        updateUserRequest(user);
-        enqueueSnackbar("Successfully updated user.", { variant: 'success' });
-        setOpen(false);
-        setShouldUpdate(true);
+        let response = updateUserRequest(user);
+        if (!response.success) {
+            enqueueSnackbar(response.message, { variant: 'error' });
+            return false;
+        }
+        else {
+            enqueueSnackbar(response.message, { variant: 'success' });
+            setOpen(false);
+            setShouldUpdate(true);
+            return true;
+        }
     }
 
     const deleteUser = (user: User) => {
@@ -128,8 +142,7 @@ const ContainerUsers = () => {
         <Box style={{ textAlign: 'center' }}>
             <Typography>You don't have sufficient rights to view this page.</Typography>
             <Link to={{ pathname: '/' }}>Go Back</Link>
-        </Box>
-        ;
+        </Box>;
 };
 
 export default ContainerUsers;

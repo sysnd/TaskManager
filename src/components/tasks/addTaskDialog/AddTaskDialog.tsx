@@ -18,17 +18,20 @@ export default function FormDialog(props: any) {
       saveTask,
       taskToUpdate,
       titleErrorProps,
-      setTitleErrorProps
+      setTitleErrorProps,
+      title
     } = props || {};
 
-  const [task, setTask] = useState<Task>({
+  const defaultTask = {
     id: '',
     userId: '',
     title: '',
     description: '',
     estimation: 0,
     status: TaskStatus.New
-  })
+  };
+
+  const [task, setTask] = useState<Task>(defaultTask)
 
   useEffect(() => {
     if (open === true) {
@@ -40,16 +43,18 @@ export default function FormDialog(props: any) {
 
   const handleClose = () => {
     setOpen(false);
+    setTask(defaultTask);
   };
 
   const handleAdd = (task: Task) => {
     saveTask(task);
+    setTask(defaultTask);
   };
 
   return (
     <div>
       <Dialog open={open} onClose={handleClose} fullWidth={true}>
-        <DialogTitle id='form-dialog-title'>Add Task</DialogTitle>
+        <DialogTitle id='form-dialog-title'>{title}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus

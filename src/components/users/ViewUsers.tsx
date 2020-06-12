@@ -27,8 +27,9 @@ const ViewUsers = (props: any) => {
 
     const [currentUser, setCurrentUser] = useState<User>();
     const [isOpen, setIsOpen] = useState(false);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+    const [title, setTitle] = useState('');
+    const [addTitle, setAddTitle] = useState('');
+    const [description, setDescription] = useState('');
 
     const disabledDelete = (user: User) => {
         if (loggedInUser.isAdmin && user.id !== loggedInUser.id) {
@@ -54,7 +55,7 @@ const ViewUsers = (props: any) => {
         setDescription(description);
     }
 
-    const onContinue = (user:User) =>{
+    const onContinue = (user: User) => {
         deleteUser(user);
         setIsOpen(false);
     }
@@ -66,11 +67,15 @@ const ViewUsers = (props: any) => {
     return (
         <Box>
             <Button
-                type="submit"
-                variant="contained"
-                color="primary"
+                type='submit'
+                variant='contained'
+                color='primary'
                 startIcon={<NoteAddIcon />}
-                onClick={() => setOpen(true)}
+                onClick={() => {
+                    setCurrentUser(undefined);
+                    setAddTitle('Add User');
+                    setOpen(true);
+                }}
             >
                 Add user</Button>
             <AddUserDialog
@@ -83,6 +88,7 @@ const ViewUsers = (props: any) => {
                 firstNameErrorProps={firstNameErrorProps}
                 lastNameErrorProps={lastNameErrorProps}
                 unsetErrorProps={unsetErrorProps}
+                title={addTitle}
             />
             <Box mt={3}>
                 <TableContainer component={Paper} elevation={3} className={classes.container}>
@@ -100,7 +106,7 @@ const ViewUsers = (props: any) => {
                                 (
                                     <TableRow>
                                         <TableCell colSpan={4} className={classes.textAlign}>
-                                            <Typography color="textSecondary" className={classes.text}>
+                                            <Typography color='textSecondary' className={classes.text}>
                                                 No records found.
                                         </Typography>
                                         </TableCell>
@@ -111,31 +117,32 @@ const ViewUsers = (props: any) => {
                                         <React.Fragment key={index}>
                                             <TableRow className={index % 2 ? classes.lightRow : classes.darkRow}>
                                                 <TableCell>
-                                                    <Typography color="textSecondary" className={classes.text}>
+                                                    <Typography color='textSecondary' className={classes.text}>
                                                         {user.firstName}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="textSecondary" className={classes.text}>
+                                                    <Typography color='textSecondary' className={classes.text}>
                                                         {user.lastName}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="textSecondary" className={classes.text}>
+                                                    <Typography color='textSecondary' className={classes.text}>
                                                         {user.username}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="textSecondary" className={classes.text}>
+                                                    <Typography color='textSecondary' className={classes.text}>
                                                         {user.isAdmin === true ? 'True' : 'False'}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell style={{ width: '100px' }}>
                                                     <IconButton
-                                                        type="submit"
-                                                        color="primary"
+                                                        type='submit'
+                                                        color='primary'
                                                         onClick={() => {
                                                             setCurrentUser(user);
+                                                            setAddTitle('Update User');
                                                             setOpen(true);
                                                         }}
                                                         disabled={disabledEdit(user)}
@@ -143,14 +150,14 @@ const ViewUsers = (props: any) => {
                                                         <EditIcon />
                                                     </IconButton>
                                                     <IconButton
-                                                        type="submit"
-                                                        color="primary"
-                                                        onClick={() => openSimpleDialog('Are you sure you want to delete this user?', 'This will remove the user permanently.' )}
+                                                        type='submit'
+                                                        color='primary'
+                                                        onClick={() => openSimpleDialog('Are you sure you want to delete this user?', 'This will remove the user permanently.')}
                                                         disabled={disabledDelete(user)}
                                                     >
                                                         <DeleteForeverIcon />
                                                     </IconButton>
-                                                    <SimpleDialog isOpen={isOpen} title={title} description={description} onCancel={onClose} onContinue={()=>onContinue(user)} />
+                                                    <SimpleDialog isOpen={isOpen} title={title} description={description} onCancel={onClose} onContinue={() => onContinue(user)} />
                                                 </TableCell>
                                             </TableRow >
                                         </React.Fragment>

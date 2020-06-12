@@ -19,14 +19,15 @@ const ViewTasks = (props: any) => {
             setOpen,
             loggedInUser,
             titleErrorProps,
-            setTitleErrorProps
+            setTitleErrorProps,
         } = props || {};
     const classes = styles();
 
     const [currentTask, setCurrentTask] = useState<Task>();
     const [isOpen, setIsOpen] = useState(false);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+    const [title, setTitle] = useState('');
+    const [addTitle, setAddTitle] = useState('');
+    const [description, setDescription] = useState('');
 
     const disabled = (task: Task) => {
         if (task.userId === loggedInUser.id) {
@@ -58,11 +59,15 @@ const ViewTasks = (props: any) => {
     return (
         <Box>
             <Button
-                type="submit"
-                variant="contained"
-                color="primary"
+                type='submit'
+                variant='contained'
+                color='primary'
                 startIcon={<NoteAddIcon />}
-                onClick={() => setOpen(true)}
+                onClick={() => {
+                    setCurrentTask(undefined);
+                    setAddTitle('Add Task');
+                    setOpen(true);
+                }}
             >
                 Add task</Button>
             <AddTaskDialog
@@ -72,6 +77,7 @@ const ViewTasks = (props: any) => {
                 saveTask={saveTask}
                 titleErrorProps={titleErrorProps}
                 setTitleErrorProps={setTitleErrorProps}
+                title={addTitle}
             />
             <Box mt={3}>
                 <TableContainer component={Paper} elevation={3} className={classes.container}>
@@ -89,7 +95,7 @@ const ViewTasks = (props: any) => {
                                 (
                                     <TableRow>
                                         <TableCell colSpan={4} className={classes.textAlign}>
-                                            <Typography color="textSecondary" className={classes.text}>
+                                            <Typography color='textSecondary' className={classes.text}>
                                                 No records found.
                                         </Typography>
                                         </TableCell>
@@ -100,31 +106,32 @@ const ViewTasks = (props: any) => {
                                         <React.Fragment key={index}>
                                             <TableRow className={index % 2 ? classes.lightRow : classes.darkRow}>
                                                 <TableCell>
-                                                    <Typography color="textSecondary" className={classes.text}>
+                                                    <Typography color='textSecondary' className={classes.text}>
                                                         {task.title}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="textSecondary" className={classes.text}>
+                                                    <Typography color='textSecondary' className={classes.text}>
                                                         {task.description}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="textSecondary" className={classes.text}>
+                                                    <Typography color='textSecondary' className={classes.text}>
                                                         {task.estimation}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Typography color="textSecondary" className={classes.text}>
+                                                    <Typography color='textSecondary' className={classes.text}>
                                                         {TaskStatus[task.status]}
                                                     </Typography>
                                                 </TableCell>
                                                 <TableCell style={{ width: '100px' }}>
                                                     <IconButton
-                                                        type="submit"
-                                                        color="primary"
+                                                        type='submit'
+                                                        color='primary'
                                                         onClick={() => {
                                                             setCurrentTask(task);
+                                                            setAddTitle('Update Task');
                                                             setOpen(true);
                                                         }}
                                                         disabled={disabled(task)}
@@ -132,8 +139,8 @@ const ViewTasks = (props: any) => {
                                                         <EditIcon />
                                                     </IconButton>
                                                     <IconButton
-                                                        type="submit"
-                                                        color="primary"
+                                                        type='submit'
+                                                        color='primary'
                                                         onClick={() => openSimpleDialog('Are you sure you want to delete this task?', 'This will remove the task permanently.')}
                                                         disabled={disabled(task)}
                                                     >

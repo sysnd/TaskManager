@@ -23,14 +23,16 @@ export default function FormDialog(props: any) {
             unsetErrorProps
         } = props || {};
 
-    const [user, setUser] = useState<User>({
+    const defaultUser = {
         id: '',
         username: '',
         password: '',
         firstName: '',
         lastName: '',
         isAdmin: false
-    })
+    };
+
+    const [user, setUser] = useState<User>(defaultUser)
 
     useEffect(() => {
         if (open === true) {
@@ -38,14 +40,18 @@ export default function FormDialog(props: any) {
                 setUser(userToUpdate);
             }
         }
-    }, [open, userToUpdate])
+    }, [open, setUser, userToUpdate])
 
     const handleClose = () => {
         setOpen(false);
+        setUser(defaultUser);
     };
 
     const handleAdd = (user: User) => {
-        handleSubmit(user);
+        let response = handleSubmit(user);
+        if(response){
+            setUser(defaultUser);            
+        }
     };
 
     return (
@@ -57,7 +63,7 @@ export default function FormDialog(props: any) {
                         value={user.firstName || ''}
                         onChange={(e) => {
                             setUser({ ...user, firstName: e.target.value });
-                            unsetErrorProps("firstName");
+                            unsetErrorProps('firstName');
                         }}
                         fullWidth
                         autoFocus
@@ -69,11 +75,11 @@ export default function FormDialog(props: any) {
                         error={firstNameErrorProps.error}
                         helperText={firstNameErrorProps.helperText}
                     />
-                     <TextField
+                    <TextField
                         value={user.lastName || ''}
                         onChange={(e) => {
                             setUser({ ...user, lastName: e.target.value });
-                            unsetErrorProps("lastName");
+                            unsetErrorProps('lastName');
                         }}
                         fullWidth
                         required
@@ -84,11 +90,11 @@ export default function FormDialog(props: any) {
                         error={lastNameErrorProps.error}
                         helperText={lastNameErrorProps.helperText}
                     />
-                     <TextField
+                    <TextField
                         value={user.username || ''}
                         onChange={(e) => {
                             setUser({ ...user, username: e.target.value });
-                            unsetErrorProps("username");
+                            unsetErrorProps('username');
                         }}
                         fullWidth
                         required
@@ -99,11 +105,11 @@ export default function FormDialog(props: any) {
                         error={usernameErrorProps.error}
                         helperText={usernameErrorProps.helperText}
                     />
-                     <TextField
+                    <TextField
                         value={user.password || ''}
                         onChange={(e) => {
                             setUser({ ...user, password: e.target.value });
-                            unsetErrorProps("password");
+                            unsetErrorProps('password');
                         }}
                         fullWidth
                         required
@@ -119,10 +125,10 @@ export default function FormDialog(props: any) {
                             <Checkbox
                                 checked={user.isAdmin}
                                 onClick={(e: any) => setUser({ ...user, isAdmin: e.target.checked })}
-                                color="primary"
+                                color='primary'
                             />
                         }
-                        label="Admin"
+                        label='Admin'
                     />
                 </DialogContent>
                 <DialogActions>
